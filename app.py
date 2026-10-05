@@ -51,7 +51,7 @@ def retrieve_context(query, top_k=3):
         })
     return results
 
-groq_api_key = st.secrets.get("GROQ_API_KEY", "")
+groq_api_key = st.secrets.get("GROQ_API_KEY", "").strip()
 
 if not groq_api_key:
     st.error("⚠️ ไม่พบ GROQ_API_KEY กรุณาตั้งค่าใน Streamlit Community Cloud Secrets")
@@ -63,6 +63,7 @@ selected_prompt = None
 
 with st.sidebar:
     st.header("⚙️ เมนูและการตั้งค่า")
+    st.caption(f"🔑 Debug Key: {groq_api_key[:7]}...{groq_api_key[-4:]} (ยาว {len(groq_api_key)} ตัวอักษร)")
     
     if st.button("🗑️ ล้างประวัติการสนทนา", use_container_width=True):
         st.session_state.messages = [
