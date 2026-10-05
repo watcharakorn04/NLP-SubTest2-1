@@ -93,7 +93,7 @@ if prompt := st.chat_input("พิมพ์คำถามของคุณท�
         with st.spinner("กำลังค้นหาข้อมูลและประมวลคำตอบ..."):
             try:
                 response = groq_client.chat.completions.create(
-                    model="llama3-8b-8192",
+                    model="llama-3.1-8b-instant",
                     messages=[{"role": "user", "content": system_prompt}],
                     temperature=0.2
                 )
