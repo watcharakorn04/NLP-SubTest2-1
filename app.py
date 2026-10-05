@@ -122,7 +122,7 @@ if prompt:
             # 1. ฟังก์ชัน Generator ดึงข้อความทีละ Chunk จาก Groq
             def stream_groq_response():
                 response_stream = groq_client.chat.completions.create(
-                    model="llama-3.1-8b-instant",
+                    model="llama3-8b-8192",
                     messages=[{"role": "user", "content": system_prompt}],
                     temperature=0.2,
                     stream=True  # 👈 เปิดใช้งาน Streaming
