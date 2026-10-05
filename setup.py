@@ -231,10 +231,13 @@ test_questions_data = [
 pd.DataFrame(test_questions_data).to_csv("test_questions.csv", index=False, encoding="utf-8-sig")
 print("✅ สร้างไฟล์ test_questions.csv เรียบร้อย")
 
-# 4. requirements.txt
-with open("requirements.txt", "w", encoding="utf-8") as f:
-    f.write("streamlit\nsentence-transformers\nfaiss-cpu\ngroq\npandas\n")
-print("✅ สร้างไฟล์ requirements.txt เรียบร้อย")
+# 4. requirements.txt (สร้างเฉพาะเมื่อยังไม่มีไฟล์ เพื่อไม่ทับการแก้ไขด้วยมือ)
+if not os.path.exists("requirements.txt"):
+    with open("requirements.txt", "w", encoding="utf-8") as f:
+        f.write("streamlit\nsentence-transformers\nfaiss-cpu\ngroq\npandas\ntorchvision\n")
+    print("✅ สร้างไฟล์ requirements.txt เรียบร้อย")
+else:
+    print("ℹ️ พบ requirements.txt อยู่แล้ว ข้ามการเขียนทับ")
 
 # 5. .gitignore
 with open(".gitignore", "w", encoding="utf-8") as f:

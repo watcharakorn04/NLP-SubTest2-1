@@ -51,7 +51,15 @@ def retrieve_context(query, top_k=3):
         })
     return results
 
-groq_api_key = st.secrets.get("GROQ_API_KEY", "").strip()
+def get_secret(key, default=""):
+    try:
+        value = st.secrets.get(key, default)
+    except Exception:
+        value = os.environ.get(key, default)
+    return str(value or default).strip().strip('"').strip("'").strip()
+
+groq_api_key = get_secret("GROQ_API_KEY")
+groq_model = get_secret("GROQ_MODEL", "llama-3.1-8b-instant")
 
 if not groq_api_key:
     st.error("⚠️ ไม่พบ GROQ_API_KEY กรุณาตั้งค่าใน Streamlit Community Cloud Secrets")
@@ -63,7 +71,7 @@ selected_prompt = None
 
 with st.sidebar:
     st.header("⚙️ เมนูและการตั้งค่า")
-    st.caption(f"🔑 Debug Key: {groq_api_key[:7]}...{groq_api_key[-4:]} (ยาว {len(groq_api_key)} ตัวอักษร)")
+    st.caption(f"🔑 Debug Key: {groq_api_key[:7]}...{groq_api_key[-4:]} (ยาว {len(groq_api_key)} ตัวอักษร) | 🤖 Model: `{groq_model}`")
     
     if st.button("🗑️ ล้างประวัติการสนทนา", use_container_width=True):
         st.session_state.messages = [
@@ -123,7 +131,7 @@ if prompt:
             # 1. ฟังก์ชัน Generator ดึงข้อความทีละ Chunk จาก Groq
             def stream_groq_response():
                 response_stream = groq_client.chat.completions.create(
-                    model="llama-3.1-8b-instant",
+                    model=groq_model,
                     messages=[{"role": "user", "content": system_prompt}],
                     temperature=0.2,
                     stream=True  # 👈 เปิดใช้งาน Streaming
