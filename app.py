@@ -38,7 +38,7 @@ def init_rag_pipeline():
 
 chunks, embed_model, faiss_index = init_rag_pipeline()
 
-def retrieve_context(query, top_k=3):
+def retrieve_context(query, top_k=5):
     query_vec = embed_model.encode([query], normalize_embeddings=True)
     scores, indices = faiss_index.search(query_vec, top_k)
     results = []
@@ -109,7 +109,7 @@ if prompt:
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    retrieved = retrieve_context(prompt, top_k=3)
+    retrieved = retrieve_context(prompt, top_k=5)
     context_text = "\n\n".join([f"[แหล่งที่มา: {c['source']} | {c['title']}]\n{c['text']}" for c in retrieved])
 
     system_prompt = f"""คุณคือผู้ช่วยตอบคำถามการท่องเที่ยวและร้านอาหารในจังหวัดเชียงใหม่ที่สุภาพและรอบรู้
