@@ -71,7 +71,7 @@ selected_prompt = None
 
 with st.sidebar:
     st.header("⚙️ เมนูและการตั้งค่า")
-    st.caption(f"🔑 Debug Key: {groq_api_key[:7]}...{groq_api_key[-4:]} (ยาว {len(groq_api_key)} ตัวอักษร) | 🤖 Model: `{groq_model}`")
+    #st.caption(f"🔑 Debug Key: {groq_api_key[:7]}...{groq_api_key[-4:]} (ยาว {len(groq_api_key)} ตัวอักษร) | 🤖 Model: `{groq_model}`")
     
     if st.button("🗑️ ล้างประวัติการสนทนา", use_container_width=True):
         st.session_state.messages = [
